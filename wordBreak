@@ -1,0 +1,25 @@
+var wordBreak = function(s, wordDict) {
+    const lookup = {};
+    const res = wordBreakUtil(0);
+    
+    function wordBreakUtil(start) {
+        if (start === s.length)  return true
+        if (start >= s.length) return false;
+
+        if (lookup[start] === undefined) {
+            lookup[start] = false;
+            
+            for (const word of wordDict) {
+                const end = start + word.length;
+                if (end <= s.length && s.substring(start, end) === word) {
+                    lookup[start] = wordBreakUtil(end);
+                    if (lookup[start] === true) break;
+                }
+            };   
+        }
+        
+        return lookup[start];
+    }
+    
+    return res;
+};
